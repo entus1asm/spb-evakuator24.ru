@@ -268,14 +268,18 @@
 		min-height: 44px;
 		padding: 12px 24px;
 		border-radius: 999px;
-		background: linear-gradient(180deg, #47a7ff 0%, #2a86ea 100%);
+		background: #2a86ea;
 		font-size: 0.75rem;
 		font-weight: 700;
 		line-height: 1;
 		text-transform: uppercase;
 		letter-spacing: 0.12em;
 		color: #ffffff;
-		box-shadow: 0 10px 20px rgba(48, 136, 234, 0.24);
+		transition: background-color 0.2s ease, opacity 0.2s ease;
+	}
+
+	&__proof-button:hover {
+		background: #2479d4;
 	}
 
 	@include laptop {

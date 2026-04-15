@@ -76,9 +76,23 @@
 	border: none;
 	cursor: pointer;
 
-	@include tablet {
+	@include header-collapse {
 		display: flex;
+		order: -1;
+		margin-right: auto;
 		margin-left: 0;
 		flex-shrink: 0;
+	}
+
+	@include mobile-sm {
+		--width: 24px;
+		--height: 18px;
+		--spacing: 5px;
+	}
+
+	@include mobile-xs {
+		--width: 22px;
+		--height: 16px;
+		--spacing: 4px;
 	}
 }

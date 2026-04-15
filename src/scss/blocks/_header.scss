@@ -18,7 +18,7 @@
 			0 14px 34px rgba(0, 0, 0, 0.2),
 			inset 0 1px 0 rgba(255, 255, 255, 0.03);
 
-		@include tablet {
+		@include header-collapse {
 			column-gap: 12px;
 			padding: 10px 12px;
 		}
@@ -34,7 +34,7 @@
 	&__nav {
 		margin-left: auto;
 
-		@include tablet {
+		@include header-collapse {
 			display: none;
 		}
 	}
@@ -45,7 +45,11 @@
 		column-gap: 24px;
 		flex-shrink: 0;
 
-		@include tablet {
+		@include laptop {
+			column-gap: 18px;
+		}
+
+		@include header-collapse {
 			display: none;
 		}
 	}
@@ -62,6 +66,17 @@
 		line-height: 1;
 		letter-spacing: -0.02em;
 		color: #ffffff;
+	}
+
+	@include laptop {
+		&__phone {
+			font-size: 1rem;
+		}
+
+		&__button {
+			padding: 12px 18px;
+			font-size: 0.8125rem;
+		}
 	}
 
 	&__phone:hover {
@@ -91,10 +106,12 @@
 	&__mobile-contacts {
 		display: none;
 
-		@include tablet {
+		@include header-collapse {
 			display: flex;
 			align-items: center;
-			margin-left: auto;
+			margin-left: 0;
+			position: relative;
+			z-index: 2;
 			flex-shrink: 0;
 		}
 	}
@@ -116,8 +133,103 @@
 		color: #ffffff;
 	}
 
+	&__mobile-button-text--short {
+		display: none;
+	}
+
 	&__mobile-button:hover {
 		color: #ffffff;
+	}
+
+	@include mobile {
+		padding-top: 12px;
+
+		&__row {
+			min-height: 66px;
+			column-gap: 10px;
+			padding: 8px 10px 8px 12px;
+			border-radius: 18px;
+		}
+
+		&__logo {
+			min-width: 0;
+			flex: 1 1 auto;
+		}
+
+		&__mobile-button {
+			min-height: 36px;
+			padding: 9px 12px;
+			font-size: 0.625rem;
+		}
+	}
+
+	@include header-collapse {
+		&__row {
+			position: relative;
+			justify-content: space-between;
+		}
+
+		&__logo {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			z-index: 1;
+			min-width: 0;
+			max-width: calc(100% - 220px);
+			transform: translate(-50%, -50%);
+			justify-content: center;
+		}
+
+		&__mobile-contacts {
+			margin-left: 0;
+		}
+	}
+
+	@include mobile-sm {
+		padding-top: 10px;
+
+		&__row {
+			min-height: 60px;
+			column-gap: 8px;
+			padding: 8px 10px;
+		}
+
+		&__logo {
+			max-width: calc(100% - 132px);
+		}
+
+		&__mobile-button {
+			min-height: 34px;
+			padding: 8px 10px;
+			font-size: 0.5625rem;
+			border-radius: 10px;
+		}
+
+		&__mobile-button-text--full {
+			display: none;
+		}
+
+		&__mobile-button-text--short {
+			display: inline;
+		}
+	}
+
+	@include mobile-xs {
+		&__row {
+			min-height: 56px;
+			padding: 7px 8px 7px 10px;
+			border-radius: 16px;
+		}
+
+		&__logo {
+			max-width: calc(100% - 116px);
+		}
+
+		&__mobile-button {
+			min-height: 32px;
+			padding: 8px 9px;
+			font-size: 0.5rem;
+		}
 	}
 }
 
@@ -142,5 +254,47 @@
 
 	&__text {
 		white-space: nowrap;
+	}
+
+	@include mobile {
+		column-gap: 12px;
+		font-size: 0.9375rem;
+
+		&__mark {
+			width: 36px;
+			height: 36px;
+		}
+	}
+
+	@include mobile-sm {
+		min-width: 0;
+		column-gap: 10px;
+		font-size: 0.875rem;
+
+		&__mark {
+			width: 34px;
+			height: 34px;
+		}
+
+		&__text {
+			display: block;
+			min-width: 0;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+	}
+
+	@include mobile-xs {
+		column-gap: 8px;
+		font-size: 0.8125rem;
+
+		&__mark {
+			width: 30px;
+			height: 30px;
+		}
+
+		&__text {
+			min-width: 0;
+		}
 	}
 }

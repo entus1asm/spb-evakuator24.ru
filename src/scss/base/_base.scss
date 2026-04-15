@@ -2,6 +2,7 @@
 
 html {
 	scroll-behavior: smooth;
+	scroll-padding-top: var(--header-offset);
 	background-color: var(--page-bg);
 	scrollbar-gutter: stable;
 }

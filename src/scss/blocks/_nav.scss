@@ -47,3 +47,13 @@
 .nav__link.active::after {
 	opacity: 1;
 }
+
+@include laptop {
+	.nav {
+		font-size: 0.8125rem;
+	}
+
+	.nav__list {
+		column-gap: 26px;
+	}
+}

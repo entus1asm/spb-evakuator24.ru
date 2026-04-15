@@ -1,9 +1,12 @@
 $container-width: 1260px;
 $container-padding: 15px;
 
-$breakpoint-laptop: 1439px;
-$breakpoint-tablet: 1220px;
-$breakpoint-mobile: 820px;
+$breakpoint-laptop: 1320px;
+$breakpoint-header: 1100px;
+$breakpoint-tablet: 992px;
+$breakpoint-mobile: 768px;
+$breakpoint-mobile-sm: 576px;
+$breakpoint-mobile-xs: 420px;
 
 :root {
 	--container-width: #{$container-width};
@@ -20,12 +23,42 @@ $breakpoint-mobile: 820px;
 	--border-color: #e5e7eb;
 
 	--laptop-size: #{$breakpoint-laptop};
+	--header-size: #{$breakpoint-header};
 	--tablet-size: #{$breakpoint-tablet};
 	--mobile-size: #{$breakpoint-mobile};
+	--mobile-sm-size: #{$breakpoint-mobile-sm};
+	--mobile-xs-size: #{$breakpoint-mobile-xs};
+	--header-offset: 104px;
 }
 
 .dark {
 	--page-bg: #252526;
 	--text-color: #ffffff;
 	--border-color: #3f3f46;
+}
+
+@media (max-width: $breakpoint-mobile-sm) {
+	:root {
+		--container-padding: 14px;
+		--header-offset: 82px;
+	}
+}
+
+@media (max-width: $breakpoint-mobile-xs) {
+	:root {
+		--container-padding: 12px;
+		--header-offset: 76px;
+	}
+}
+
+@media (max-width: $breakpoint-header) {
+	:root {
+		--header-offset: 96px;
+	}
+}
+
+@media (max-width: $breakpoint-mobile) {
+	:root {
+		--header-offset: 88px;
+	}
 }

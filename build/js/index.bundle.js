@@ -520,12 +520,16 @@ function mobileNav() {
 		return;
 	}
 
-	const getTabletBreakpoint = () => {
-		const breakpoint = getComputedStyle(document.documentElement)
-			.getPropertyValue('--tablet-size')
-			.trim();
+	const getNavBreakpoint = () => {
+		const styles = getComputedStyle(document.documentElement);
+		const headerBreakpoint = styles.getPropertyValue('--header-size').trim();
+		const tabletBreakpoint = styles.getPropertyValue('--tablet-size').trim();
 
-		return Number.parseInt(breakpoint, 10) || 1220;
+		return (
+			Number.parseInt(headerBreakpoint, 10) ||
+			Number.parseInt(tabletBreakpoint, 10) ||
+			1100
+		);
 	};
 
 	const closeMobileNav = () => {
@@ -576,7 +580,7 @@ function mobileNav() {
 	});
 
 	window.addEventListener('resize', () => {
-		if (window.innerWidth > getTabletBreakpoint()) {
+		if (window.innerWidth > getNavBreakpoint()) {
 			closeMobileNav();
 		}
 	});
