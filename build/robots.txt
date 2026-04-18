@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://spb-evak24.ru/sitemap.xml

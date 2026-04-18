@@ -244,6 +244,15 @@
 	text-transform: uppercase;
 	letter-spacing: 0.02em;
 	color: #ffffff;
+	-webkit-tap-highlight-color: transparent;
+	user-select: none;
+
+	&:visited,
+	&:hover,
+	&:active,
+	&:focus-visible {
+		color: #ffffff;
+	}
 
 	&__mark {
 		display: block;

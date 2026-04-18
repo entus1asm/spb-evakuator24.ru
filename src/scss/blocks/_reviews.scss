@@ -269,7 +269,14 @@
 		text-transform: uppercase;
 		letter-spacing: 0.12em;
 		color: #ffffff;
+		-webkit-tap-highlight-color: transparent;
+		user-select: none;
 		transition: background-color 0.2s ease, opacity 0.2s ease;
+	}
+
+	&__proof-button:visited,
+	&__proof-button:hover {
+		color: #ffffff;
 	}
 
 	&__proof-button:hover {

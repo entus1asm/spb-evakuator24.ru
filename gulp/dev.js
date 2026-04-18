@@ -192,12 +192,21 @@ gulp.task('svgSymbol:dev', function () {
 		.pipe(gulp.dest('./build/img/svgsprite/'));
 });
 
-gulp.task('files:dev', function () {
+gulp.task('files:root:dev', function () {
 	return gulp
-		.src('./src/files/**/*', { allowEmpty: true })
+		.src(['./src/files/robots.txt', './src/files/sitemap.xml'], { allowEmpty: true })
+		.pipe(changed('./build/'))
+		.pipe(gulp.dest('./build/'));
+});
+
+gulp.task('files:nested:dev', function () {
+	return gulp
+		.src(['./src/files/**/*', '!./src/files/robots.txt', '!./src/files/sitemap.xml'], { allowEmpty: true })
 		.pipe(changed('./build/files/'))
 		.pipe(gulp.dest('./build/files/'));
 });
+
+gulp.task('files:dev', gulp.parallel('files:root:dev', 'files:nested:dev'));
 
 gulp.task('js:dev', function () {
 	return gulp

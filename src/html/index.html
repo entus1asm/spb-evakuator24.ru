@@ -4,11 +4,25 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Эвакуатор 24/7 В СПБ</title>
+    <title>Эвакуатор в СПб 24/7 | Подача от 20 минут</title>
     <meta
       name="description"
-      content="Эвакуатор в СПб и Ленинградской области 24/7. Подача от 20 минут, честная цена, работа без посредников."
+      content="Служба эвакуации в Санкт-Петербурге и Ленинградской области. Подача от 20 минут, работа 24/7, без посредников и скрытых наценок."
     />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#0c0f0f" />
+    <link rel="canonical" href="https://spb-evak24.ru/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:title" content="Эвакуатор в СПб 24/7 | Подача от 20 минут" />
+    <meta
+      property="og:description"
+      content="Служба эвакуации в Санкт-Петербурге и Ленинградской области. Подача от 20 минут, работа 24/7, без посредников и скрытых наценок."
+    />
+    <meta property="og:url" content="https://spb-evak24.ru/" />
+    <meta property="og:image" content="https://spb-evak24.ru/img/services/services-main-image.jpg" />
+    <meta property="og:image:alt" content="Эвакуатор 24 часа в Санкт-Петербурге" />
     <link rel="stylesheet" href="./css/main.css" />
 
     <link rel="icon" type="image/svg+xml" href="./img/favicons/favicon.svg" />
@@ -17,6 +31,90 @@
       sizes="180x180"
       href="./img/favicons/apple-touch-icon.png"
     />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Эвакуатор 24 часа",
+        "url": "https://spb-evak24.ru/",
+        "telephone": "+7-905-200-33-33",
+        "image": "https://spb-evak24.ru/img/services/services-main-image.jpg",
+        "description": "Служба эвакуации в Санкт-Петербурге и Ленинградской области. Подача от 20 минут, работа 24/7, без посредников и скрытых наценок.",
+        "priceRange": "от 4000 RUB",
+        "areaServed": [
+          "Санкт-Петербург",
+          "Ленинградская область",
+          "КАД",
+          "ЗСД",
+          "межгород"
+        ],
+        "openingHours": "Mo-Su 00:00-23:59",
+        "serviceType": [
+          "Эвакуация легковых автомобилей",
+          "Эвакуация автомобилей с АКПП",
+          "Эвакуация из подземных паркингов",
+          "Эвакуация автомобилей с заблокированными колесами"
+        ]
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Сколько стоит эвакуатор по Санкт-Петербургу?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Минимальная стоимость начинается от 4000 ₽. Точная цена зависит от района подачи, состояния автомобиля, необходимости выезда за КАД, заблокированных колес и сложности погрузки."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Как быстро вы приезжаете?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "По ближайшим районам и основным направлениям СПб эвакуатор подается в среднем от 20 минут. По Ленинградской области и на трассы точное время озвучивается по телефону."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Работаете ли ночью, в выходные и праздники?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Да, выезд доступен 24/7, включая ночное время, выходные и праздничные дни."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Можно ли эвакуировать автомобиль с АКПП, низким клиренсом или заблокированными колесами?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Да. Для таких случаев используется аккуратная погрузка, подкатные тележки и лебедка. Особенности автомобиля лучше заранее сообщить по телефону."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Выезжаете ли за КАД, по области и на межгород?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Да, работа ведется по Санкт-Петербургу, Ленинградской области, КАД, ЗСД и междугородним направлениям."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Что подготовить до приезда эвакуатора?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Желательно подготовить документы на автомобиль, сообщить точный адрес подачи, особенности машины и точку доставки. Если автомобиль после ДТП или стоит в сложном месте, это тоже лучше заранее озвучить."
+            }
+          }
+        ]
+      }
+    </script>
   </head>
 
   <body>
@@ -24,7 +122,8 @@
     <main>
       @@include('blocks/hero.html') @@include('blocks/advantages.html')
       @@include('blocks/services.html') @@include('blocks/pricing.html')
-      @@include('blocks/reviews.html') @@include('blocks/contacts-cta.html')
+      @@include('blocks/coverage.html') @@include('blocks/reviews.html')
+      @@include('blocks/faq.html') @@include('blocks/contacts-cta.html')
     </main>
     @@include('blocks/footer.html')
     <script src="./js/index.bundle.js"></script>

@@ -198,12 +198,21 @@ gulp.task('svgSymbol:docs', function () {
 		.pipe(gulp.dest('./docs/img/svgsprite/'));
 });
 
-gulp.task('files:docs', function () {
+gulp.task('files:root:docs', function () {
 	return gulp
-		.src('./src/files/**/*', { allowEmpty: true })
+		.src(['./src/files/robots.txt', './src/files/sitemap.xml'], { allowEmpty: true })
+		.pipe(changed('./docs/'))
+		.pipe(gulp.dest('./docs/'));
+});
+
+gulp.task('files:nested:docs', function () {
+	return gulp
+		.src(['./src/files/**/*', '!./src/files/robots.txt', '!./src/files/sitemap.xml'], { allowEmpty: true })
 		.pipe(changed('./docs/files/'))
 		.pipe(gulp.dest('./docs/files/'));
 });
+
+gulp.task('files:docs', gulp.parallel('files:root:docs', 'files:nested:docs'));
 
 gulp.task('js:docs', function () {
 	return gulp

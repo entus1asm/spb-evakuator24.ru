@@ -1,0 +1,204 @@
+.coverage {
+	padding: 96px 0;
+	background: #ffffff;
+	color: #212426;
+
+	&__head {
+		max-width: 620px;
+		margin-bottom: 40px;
+	}
+
+	&__title {
+		@extend %section-title-base;
+		margin-bottom: 14px;
+	}
+
+	&__subtitle {
+		@extend %section-supporting-text-base;
+		max-width: 520px;
+	}
+
+	&__layout {
+		display: grid;
+		grid-template-columns: minmax(0, 1.22fr) minmax(320px, 0.78fr);
+		gap: 20px;
+		align-items: stretch;
+	}
+
+	&__list {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 16px;
+	}
+
+	&__card {
+		display: flex;
+		flex-direction: column;
+		min-height: 100%;
+		padding: 28px 28px 30px;
+		border: 1px solid rgba(18, 24, 27, 0.08);
+		border-radius: 26px;
+		background: #ffffff;
+		box-shadow:
+			0 16px 32px rgba(10, 15, 18, 0.04),
+			0 1px 0 rgba(255, 255, 255, 0.96) inset;
+	}
+
+	&__card--wide {
+		grid-column: 1 / -1;
+	}
+
+	&__card-label,
+	&__aside-label {
+		margin-bottom: 12px;
+		font-size: 0.75rem;
+		font-weight: 700;
+		line-height: 1.3;
+		text-transform: uppercase;
+		letter-spacing: 0.14em;
+		color: #c2c6c9;
+	}
+
+	&__card-title {
+		margin-bottom: 18px;
+		font-size: 1.375rem;
+		font-weight: 700;
+		line-height: 1.18;
+		letter-spacing: -0.02em;
+		color: #2d3133;
+	}
+
+	&__tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	&__tag {
+		display: inline-flex;
+		align-items: center;
+		min-height: 38px;
+		padding: 10px 14px;
+		border-radius: 999px;
+		background: #f5f6f7;
+		font-size: 0.875rem;
+		font-weight: 600;
+		line-height: 1.2;
+		color: #4f5558;
+	}
+
+	&__aside-card {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		padding: 32px 30px 30px;
+		border: 1px solid rgba(255, 255, 255, 0.06);
+		border-radius: 30px;
+		background:
+			radial-gradient(circle at 18% 22%, rgba(255, 127, 14, 0.18) 0%, rgba(255, 127, 14, 0) 24%),
+			linear-gradient(180deg, #171411 0%, #0d1010 100%);
+		box-shadow:
+			0 24px 48px rgba(0, 0, 0, 0.22),
+			0 1px 0 rgba(255, 255, 255, 0.04) inset;
+		color: #ffffff;
+		overflow: hidden;
+	}
+
+	&__aside-title {
+		margin-bottom: 16px;
+		font-size: 2rem;
+		font-weight: 700;
+		line-height: 1.08;
+		letter-spacing: -0.03em;
+	}
+
+	&__aside-text {
+		margin-bottom: 28px;
+		font-size: 1rem;
+		line-height: 1.65;
+		color: rgba(255, 255, 255, 0.72);
+	}
+
+	&__stats {
+		display: grid;
+		gap: 14px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	&__stat {
+		display: grid;
+		grid-template-columns: minmax(0, 108px) minmax(0, 1fr);
+		gap: 14px;
+		padding: 14px 0 0;
+		border-top: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	&__stat-value {
+		font-size: 1.125rem;
+		font-weight: 800;
+		line-height: 1.2;
+		letter-spacing: -0.02em;
+		color: #ff8a1d;
+	}
+
+	&__stat-text {
+		font-size: 0.9375rem;
+		line-height: 1.55;
+		color: rgba(255, 255, 255, 0.7);
+	}
+
+	@include laptop {
+		&__layout {
+			grid-template-columns: minmax(0, 1fr) minmax(300px, 0.82fr);
+		}
+
+		&__aside-title {
+			font-size: 1.75rem;
+		}
+	}
+
+	@include tablet {
+		padding: 72px 0;
+
+		&__layout {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@include mobile {
+		padding: 56px 0;
+
+		&__head {
+			margin-bottom: 32px;
+		}
+
+		&__list {
+			grid-template-columns: 1fr;
+		}
+
+		&__card,
+		&__aside-card {
+			padding: 24px 22px 24px;
+			border-radius: 24px;
+		}
+
+		&__card-title {
+			font-size: 1.25rem;
+		}
+
+		&__aside-title {
+			font-size: 1.625rem;
+		}
+
+		&__stat {
+			grid-template-columns: 1fr;
+			gap: 8px;
+		}
+	}
+}

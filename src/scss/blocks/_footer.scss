@@ -5,9 +5,9 @@
 
 	&__top {
 		display: grid;
-		grid-template-columns: minmax(240px, 1fr) auto auto;
+		grid-template-columns: minmax(240px, 320px) minmax(0, 1fr) auto;
 		align-items: start;
-		column-gap: 48px;
+		column-gap: 40px;
 		row-gap: 32px;
 		padding-bottom: 38px;
 		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -32,15 +32,16 @@
 
 	&__nav {
 		align-self: center;
+		width: 100%;
 	}
 
 	&__nav-list {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
-		justify-content: center;
-		column-gap: 52px;
-		row-gap: 16px;
+		justify-content: flex-start;
+		column-gap: 34px;
+		row-gap: 14px;
 	}
 
 	&__nav-link {

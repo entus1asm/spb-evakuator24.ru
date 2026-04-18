@@ -52,28 +52,46 @@ if ($name === '' || $phone === '' || strlen((string) $phoneDigits) < 10) {
 $host = preg_replace('/:\d+$/', '', (string) ($_SERVER['HTTP_HOST'] ?? ''));
 $host = $host !== '' ? $host : 'site';
 $sentAt = date('d.m.Y H:i:s');
-$ip = (string) ($_SERVER['REMOTE_ADDR'] ?? 'не определен');
+$formLabel = $formName === 'callback' ? 'Обратный звонок' : $formName;
 
-$lines = [
-	'Новая заявка с сайта',
-	'Форма: ' . $formName,
-	'Имя: ' . $name,
-	'Телефон: ' . $phone,
-	'Сайт: ' . $host,
-	'IP: ' . $ip,
-	'Дата: ' . $sentAt,
+$emailRows = [
+	[
+		'label' => 'Имя',
+		'value' => $name,
+		'emoji' => '👤',
+	],
+	[
+		'label' => 'Телефон',
+		'value' => $phone,
+		'emoji' => '📞',
+		'isAccent' => true,
+	],
+	[
+		'label' => 'Форма',
+		'value' => $formLabel,
+		'emoji' => '📝',
+	],
+	[
+		'label' => 'Сайт',
+		'value' => $host,
+		'emoji' => '🌐',
+	],
+	[
+		'label' => 'Дата',
+		'value' => $sentAt,
+		'emoji' => '🕒',
+	],
 ];
 
-$telegramMessage = "<b>Новая заявка с сайта</b>\n"
-	. "<b>Форма:</b> " . htmlspecialchars($formName, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . "\n"
+$telegramMessage = "🚨 <b>Новая заявка на эвакуатор!</b>\n\n"
 	. "<b>Имя:</b> " . htmlspecialchars($name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . "\n"
 	. "<b>Телефон:</b> " . htmlspecialchars($phone, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . "\n"
+	. "<b>Форма:</b> " . htmlspecialchars($formLabel, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . "\n"
 	. "<b>Сайт:</b> " . htmlspecialchars($host, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . "\n"
-	. "<b>IP:</b> " . htmlspecialchars($ip, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . "\n"
 	. "<b>Дата:</b> " . htmlspecialchars($sentAt, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
-$emailSubject = 'Новая заявка: обратный звонок';
-$emailBody = implode(PHP_EOL, $lines);
+$emailSubject = '🚨 Новая заявка на эвакуатор!';
+$emailBody = buildEmailBodyHtml('🚨 Новая заявка на эвакуатор!', $emailRows);
 
 $makeResult = sendMakeWebhook(
 	(string) ($config['make_webhook_url'] ?? ''),
@@ -82,7 +100,6 @@ $makeResult = sendMakeWebhook(
 		'name' => $name,
 		'phone' => $phone,
 		'host' => $host,
-		'ip' => $ip,
 		'sent_at' => $sentAt,
 		'message' => $telegramMessage,
 	]
@@ -254,7 +271,7 @@ function sendEmailMessage($to, $fromName, $fromEmail, $subject, $body, $host, $s
 
 	$headers = [
 		'MIME-Version: 1.0',
-		'Content-Type: text/plain; charset=UTF-8',
+		'Content-Type: text/html; charset=UTF-8',
 		'From: ' . $encodedFromName . ' <' . $fromEmail . '>',
 		'Reply-To: ' . $fromEmail,
 		'X-Mailer: PHP/' . phpversion(),
@@ -423,7 +440,7 @@ function sendEmailViaSmtp($smtpHost, $smtpPort, $smtpEncryption, $smtpUsername, 
 		'To: <' . $to . '>',
 		'Subject: ' . $encodedSubject,
 		'MIME-Version: 1.0',
-		'Content-Type: text/plain; charset=UTF-8',
+		'Content-Type: text/html; charset=UTF-8',
 		'Content-Transfer-Encoding: 8bit',
 		'Message-ID: ' . $messageId,
 		'X-Mailer: PHP/' . phpversion(),
@@ -492,4 +509,63 @@ function smtpRead($socket)
 	}
 
 	return $response;
+}
+
+function buildEmailBodyHtml($title, $rows)
+{
+	$safeTitle = htmlspecialchars($title, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+	$rowsHtml = '';
+
+	foreach ($rows as $row) {
+		$label = htmlspecialchars((string) ($row['label'] ?? ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+		$value = htmlspecialchars((string) ($row['value'] ?? ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+		$emoji = htmlspecialchars((string) ($row['emoji'] ?? ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+		$valueStyle = !empty($row['isAccent'])
+			? 'margin: 6px 0 0; font-size: 24px; line-height: 1.2; font-weight: 800; color: #111827;'
+			: 'margin: 6px 0 0; font-size: 16px; line-height: 1.5; font-weight: 600; color: #111827;';
+
+		$rowsHtml .= '<tr>'
+			. '<td style="padding: 0 0 14px;">'
+			. '<div style="padding: 18px 20px; border: 1px solid #e5e7eb; border-radius: 18px; background: #ffffff;">'
+			. '<div style="font-size: 12px; line-height: 1.2; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #6b7280;">' . $emoji . ' ' . $label . '</div>'
+			. '<div style="' . $valueStyle . '">' . nl2br($value) . '</div>'
+			. '</div>'
+			. '</td>'
+			. '</tr>';
+	}
+
+	return '<!DOCTYPE html>'
+		. '<html lang="ru">'
+		. '<head>'
+		. '<meta charset="UTF-8">'
+		. '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+		. '<title>' . $safeTitle . '</title>'
+		. '</head>'
+		. '<body style="margin: 0; padding: 24px 0; background: #f3f4f6; font-family: Arial, Helvetica, sans-serif; color: #111827;">'
+		. '<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="border-collapse: collapse;">'
+		. '<tr>'
+		. '<td align="center" style="padding: 0 16px;">'
+		. '<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 640px; border-collapse: collapse;">'
+		. '<tr>'
+		. '<td style="padding: 0 0 16px;">'
+		. '<div style="padding: 32px 28px; border-radius: 28px; background: linear-gradient(135deg, #241308 0%, #0c0f0f 100%); box-shadow: 0 24px 48px rgba(17, 24, 39, 0.16);">'
+		. '<div style="display: inline-block; margin-bottom: 16px; padding: 8px 14px; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 999px; background: rgba(255, 255, 255, 0.04); font-size: 12px; line-height: 1.2; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #ff8a18;">Новая заявка</div>'
+		. '<div style="font-size: 32px; line-height: 1.1; font-weight: 800; color: #ffffff;">' . $safeTitle . '</div>'
+		. '<div style="margin-top: 12px; font-size: 16px; line-height: 1.6; color: rgba(255, 255, 255, 0.76);">Письмо сформировано автоматически с сайта. Данные клиента ниже.</div>'
+		. '</div>'
+		. '</td>'
+		. '</tr>'
+		. '<tr>'
+		. '<td>'
+		. '<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="border-collapse: collapse;">'
+		. $rowsHtml
+		. '</table>'
+		. '</td>'
+		. '</tr>'
+		. '</table>'
+		. '</td>'
+		. '</tr>'
+		. '</table>'
+		. '</body>'
+		. '</html>';
 }

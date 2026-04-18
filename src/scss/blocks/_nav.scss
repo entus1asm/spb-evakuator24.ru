@@ -1,15 +1,15 @@
 .nav {
-	font-size: 0.875rem;
+	font-size: 0.8125rem;
 	font-weight: 600;
 	line-height: 1;
 	text-transform: uppercase;
-	letter-spacing: 0.08em;
+	letter-spacing: 0.06em;
 }
 
 .nav__list {
 	display: flex;
 	align-items: center;
-	column-gap: 36px;
+	column-gap: 28px;
 }
 
 .nav__item {
@@ -50,10 +50,10 @@
 
 @include laptop {
 	.nav {
-		font-size: 0.8125rem;
+		font-size: 0.75rem;
 	}
 
 	.nav__list {
-		column-gap: 26px;
+		column-gap: 20px;
 	}
 }
