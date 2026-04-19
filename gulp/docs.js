@@ -200,14 +200,14 @@ gulp.task('svgSymbol:docs', function () {
 
 gulp.task('files:root:docs', function () {
 	return gulp
-		.src(['./src/files/robots.txt', './src/files/sitemap.xml'], { allowEmpty: true })
+		.src(['./src/files/robots.txt', './src/files/sitemap.xml', './src/files/.htaccess'], { allowEmpty: true })
 		.pipe(changed('./docs/'))
 		.pipe(gulp.dest('./docs/'));
 });
 
 gulp.task('files:nested:docs', function () {
 	return gulp
-		.src(['./src/files/**/*', '!./src/files/robots.txt', '!./src/files/sitemap.xml'], { allowEmpty: true })
+		.src(['./src/files/**/*', '!./src/files/robots.txt', '!./src/files/sitemap.xml', '!./src/files/.htaccess'], { allowEmpty: true })
 		.pipe(changed('./docs/files/'))
 		.pipe(gulp.dest('./docs/files/'));
 });

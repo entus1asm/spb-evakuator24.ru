@@ -194,14 +194,14 @@ gulp.task('svgSymbol:dev', function () {
 
 gulp.task('files:root:dev', function () {
 	return gulp
-		.src(['./src/files/robots.txt', './src/files/sitemap.xml'], { allowEmpty: true })
+		.src(['./src/files/robots.txt', './src/files/sitemap.xml', './src/files/.htaccess'], { allowEmpty: true })
 		.pipe(changed('./build/'))
 		.pipe(gulp.dest('./build/'));
 });
 
 gulp.task('files:nested:dev', function () {
 	return gulp
-		.src(['./src/files/**/*', '!./src/files/robots.txt', '!./src/files/sitemap.xml'], { allowEmpty: true })
+		.src(['./src/files/**/*', '!./src/files/robots.txt', '!./src/files/sitemap.xml', '!./src/files/.htaccess'], { allowEmpty: true })
 		.pipe(changed('./build/files/'))
 		.pipe(gulp.dest('./build/files/'));
 });

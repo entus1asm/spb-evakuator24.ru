@@ -16,9 +16,12 @@
 В корне сайта должны лежать:
 
 - `index.html`
+- `.htaccess`
 - `robots.txt`
 - `sitemap.xml`
 - папки `css/`, `js/`, `img/`, `files/`
+
+`.htaccess` нужен для редиректа `index.html` на корень сайта, чтобы адрес выглядел как `https://spb-evak24.ru/`, а не `https://spb-evak24.ru/index.html`.
 
 Файл `files/callback-config.php` содержит реальные доступы к почте и webhook Make. Он не хранится в git и должен передаваться/загружаться отдельно.
 
