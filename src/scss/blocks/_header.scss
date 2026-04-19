@@ -25,6 +25,8 @@
 	}
 
 	&__logo {
+		--header-logo-shift: 27px;
+
 		display: inline-flex;
 		align-items: center;
 		column-gap: 12px;
@@ -76,6 +78,30 @@
 		&__button {
 			padding: 12px 18px;
 			font-size: 0.8125rem;
+		}
+	}
+
+	@media (max-width: 1180px) and (min-width: 1101px) {
+		&__row {
+			column-gap: 18px;
+			padding-right: 10px;
+			padding-left: 14px;
+		}
+
+		&__contacts {
+			column-gap: 12px;
+		}
+
+		&__phone {
+			font-size: 0.9375rem;
+		}
+
+		&__button {
+			min-height: 46px;
+			padding-right: 14px;
+			padding-left: 14px;
+			font-size: 0.75rem;
+			letter-spacing: 0.02em;
 		}
 	}
 
@@ -152,6 +178,8 @@
 		}
 
 		&__logo {
+			--header-logo-shift: 24px;
+
 			min-width: 0;
 			flex: 1 1 auto;
 		}
@@ -176,7 +204,7 @@
 			z-index: 1;
 			min-width: 0;
 			max-width: calc(100% - 220px);
-			transform: translate(-50%, -50%);
+			transform: translate(calc(-50% - var(--header-logo-shift)), -50%);
 			justify-content: center;
 		}
 
@@ -195,6 +223,8 @@
 		}
 
 		&__logo {
+			--header-logo-shift: 22px;
+
 			max-width: calc(100% - 132px);
 		}
 
@@ -222,6 +252,8 @@
 		}
 
 		&__logo {
+			--header-logo-shift: 19px;
+
 			max-width: calc(100% - 116px);
 		}
 

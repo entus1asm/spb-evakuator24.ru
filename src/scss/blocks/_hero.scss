@@ -5,7 +5,10 @@
 	padding: 40px 0 90px;
 	min-height: calc(100vh - 88px);
 	min-height: calc(100svh - 88px);
-	background: transparent;
+	overflow: hidden;
+	background:
+		radial-gradient(circle at 28% 42%, rgba(255, 120, 26, 0.1) 0%, rgba(255, 120, 26, 0.06) 24%, rgba(255, 120, 26, 0.02) 38%, rgba(255, 120, 26, 0) 58%),
+		linear-gradient(90deg, #140c08 0%, #130f0c 18%, #0c0f0f 52%, #0c0f0f 100%);
 	color: #ffffff;
 
 	&__container {
@@ -466,7 +469,7 @@
 		}
 
 		&__map-frame {
-			height: 520px;
+			height: clamp(430px, 46vw, 480px);
 		}
 
 		&__map-summary {

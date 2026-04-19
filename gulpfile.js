@@ -6,6 +6,11 @@ require('./gulp/docs.js');
 require('./gulp/fontsDev.js');
 require('./gulp/fontsDocs.js');
 
+const docsBuild = gulp.series(
+	'clean:docs', 'fontsDocs',
+	gulp.parallel('html:docs', 'sass:docs', 'images:docs', gulp.series('svgStack:docs', 'svgSymbol:docs'), 'files:docs', 'js:docs')
+);
+
 gulp.task(
 	'default',
 	gulp.series(
@@ -17,9 +22,13 @@ gulp.task(
 
 gulp.task(
 	'docs',
+	docsBuild
+);
+
+gulp.task(
+	'docs:preview',
 	gulp.series(
-		'clean:docs', 'fontsDocs',
-		gulp.parallel('html:docs', 'sass:docs', 'images:docs', gulp.series('svgStack:docs', 'svgSymbol:docs'), 'files:docs', 'js:docs'),
-		gulp.parallel('server:docs')
+		docsBuild,
+		'server:docs'
 	)
 );

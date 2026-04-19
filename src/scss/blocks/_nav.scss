@@ -57,3 +57,14 @@
 		column-gap: 20px;
 	}
 }
+
+@media (max-width: 1180px) and (min-width: 1101px) {
+	.nav {
+		font-size: 0.6875rem;
+		letter-spacing: 0.045em;
+	}
+
+	.nav__list {
+		column-gap: 16px;
+	}
+}

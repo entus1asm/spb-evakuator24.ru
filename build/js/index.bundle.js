@@ -523,6 +523,7 @@ function callbackForm() {
 	const nameInput = form.querySelector('input[name="name"]');
 	const consentInput = form.querySelector('input[name="consent"]');
 	const defaultButtonText = submitButtonText ? submitButtonText.textContent : "";
+	const nameAllowedKeyPattern = /^[a-zA-Zа-яА-ЯёЁ\s'-]$/;
 
 	const validatePhone = () => {
 		if (!phoneInput) {
@@ -545,7 +546,33 @@ function callbackForm() {
 		return true;
 	};
 
-	const sanitizeName = (value) => value.replace(/\d+/g, "");
+	const sanitizeName = (value) => value
+		.replace(/[^a-zA-Zа-яА-ЯёЁ\s'-]/g, "")
+		.replace(/\s+/g, " ")
+		.replace(/\s?-\s?/g, "-")
+		.replace(/'{2,}/g, "'")
+		.slice(0, 30)
+		.trimStart();
+
+	const validateName = () => {
+		if (!nameInput) {
+			return true;
+		}
+
+		const normalizedValue = sanitizeName(nameInput.value).trim();
+
+		if (normalizedValue !== nameInput.value) {
+			nameInput.value = normalizedValue;
+		}
+
+		if (normalizedValue.length < 2) {
+			nameInput.setCustomValidity("Введите имя минимум из 2 букв");
+			return false;
+		}
+
+		nameInput.setCustomValidity("");
+		return true;
+	};
 
 	const validateConsent = () => {
 		if (!consentInput) {
@@ -592,12 +619,16 @@ function callbackForm() {
 	}
 
 	if (nameInput) {
+		nameInput.setAttribute("minlength", "2");
+		nameInput.setAttribute("maxlength", "30");
+		nameInput.setAttribute("pattern", "[A-Za-zА-Яа-яЁё\\s'\\-]{2,30}");
+
 		nameInput.addEventListener("keydown", (event) => {
 			if (event.ctrlKey || event.metaKey || event.altKey) {
 				return;
 			}
 
-			if (/\d/.test(event.key)) {
+			if (event.key.length === 1 && !nameAllowedKeyPattern.test(event.key)) {
 				event.preventDefault();
 			}
 		});
@@ -608,13 +639,18 @@ function callbackForm() {
 			if (sanitizedValue !== nameInput.value) {
 				nameInput.value = sanitizedValue;
 			}
+
+			validateName();
 		});
 
 		nameInput.addEventListener("paste", () => {
 			requestAnimationFrame(() => {
 				nameInput.value = sanitizeName(nameInput.value);
+				validateName();
 			});
 		});
+
+		nameInput.addEventListener("blur", validateName);
 	}
 
 	if (consentInput) {
@@ -631,6 +667,7 @@ function callbackForm() {
 		event.preventDefault();
 
 		validatePhone();
+		validateName();
 		validateConsent();
 
 		if (!form.reportValidity()) {

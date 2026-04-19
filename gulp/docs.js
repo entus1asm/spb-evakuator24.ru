@@ -231,7 +231,7 @@ gulp.task('server:docs', function (done) {
 		},
 		port: 8000,
 		notify: false,
-		open: true,
+		open: false,
 		// Эта настройка заставит браузер обновляться при изменениях в папке docs
 		files: ['./docs/**/*.*'] 
 	});

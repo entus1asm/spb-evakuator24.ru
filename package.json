@@ -54,6 +54,7 @@
     "dev": "gulp",
     "start": "gulp",
     "build": "gulp docs",
+    "preview": "gulp docs:preview",
     "fonts:dev": "gulp fontsDev",
     "fonts:docs": "gulp fontsDocs"
   }

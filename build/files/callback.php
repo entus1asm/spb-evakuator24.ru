@@ -29,6 +29,7 @@ $name = trim((string) ($_POST['name'] ?? ''));
 $phone = trim((string) ($_POST['phone'] ?? ''));
 $company = trim((string) ($_POST['company'] ?? ''));
 $formName = trim((string) ($_POST['form_name'] ?? 'callback'));
+$consent = (string) ($_POST['consent'] ?? '');
 
 if ($company !== '') {
 	echo json_encode([
@@ -38,9 +39,28 @@ if ($company !== '') {
 	exit;
 }
 
+$name = normalizePersonName($name);
 $phoneDigits = preg_replace('/\D+/', '', $phone);
 
-if ($name === '' || $phone === '' || strlen((string) $phoneDigits) < 10) {
+if ($consent !== 'accepted') {
+	http_response_code(422);
+	echo json_encode([
+		'success' => false,
+		'message' => 'Подтвердите согласие с политикой конфиденциальности и обработкой персональных данных.',
+	], JSON_UNESCAPED_UNICODE);
+	exit;
+}
+
+if (!isValidPersonName($name)) {
+	http_response_code(422);
+	echo json_encode([
+		'success' => false,
+		'message' => 'Пожалуйста, укажите имя от 2 до 30 букв без цифр и спецсимволов.',
+	], JSON_UNESCAPED_UNICODE);
+	exit;
+}
+
+if ($phone === '' || strlen((string) $phoneDigits) < 10) {
 	http_response_code(422);
 	echo json_encode([
 		'success' => false,
@@ -51,7 +71,7 @@ if ($name === '' || $phone === '' || strlen((string) $phoneDigits) < 10) {
 
 $host = preg_replace('/:\d+$/', '', (string) ($_SERVER['HTTP_HOST'] ?? ''));
 $host = $host !== '' ? $host : 'site';
-$sentAt = date('d.m.Y H:i:s');
+$sentAt = date('d.m.Y H:i');
 $formLabel = $formName === 'callback' ? 'Обратный звонок' : $formName;
 
 $emailRows = [
@@ -84,11 +104,11 @@ $emailRows = [
 ];
 
 $telegramMessage = "🚨 <b>Новая заявка на эвакуатор!</b>\n\n"
-	. "<b>Имя:</b> " . htmlspecialchars($name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . "\n"
-	. "<b>Телефон:</b> " . htmlspecialchars($phone, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . "\n"
-	. "<b>Форма:</b> " . htmlspecialchars($formLabel, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . "\n"
-	. "<b>Сайт:</b> " . htmlspecialchars($host, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . "\n"
-	. "<b>Дата:</b> " . htmlspecialchars($sentAt, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+	. "👤 <b>Имя:</b> " . htmlspecialchars($name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . "\n"
+	. "📞 <b>Телефон:</b> " . htmlspecialchars($phone, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . "\n"
+	. "🕒 <b>Дата:</b> " . htmlspecialchars($sentAt, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . "\n\n"
+	. "📝 <b>Форма:</b> " . htmlspecialchars($formLabel, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . "\n"
+	. "🌐 <b>Сайт:</b> " . htmlspecialchars($host, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
 $emailSubject = '🚨 Новая заявка на эвакуатор!';
 $emailBody = buildEmailBodyHtml('🚨 Новая заявка на эвакуатор!', $emailRows);
@@ -146,6 +166,37 @@ if ($debugMode) {
 http_response_code(500);
 echo json_encode($response, JSON_UNESCAPED_UNICODE);
 exit;
+
+function normalizePersonName($name)
+{
+	$name = trim((string) $name);
+	$name = (string) preg_replace('/\s+/u', ' ', $name);
+	$name = (string) preg_replace('/\s*-\s*/u', '-', $name);
+	$name = (string) preg_replace("/'{2,}/", "'", $name);
+
+	return $name;
+}
+
+function isValidPersonName($name)
+{
+	$nameLength = getUtf8Length($name);
+	$nameLettersOnly = (string) preg_replace('/[^\p{L}]+/u', '', $name);
+
+	if ($nameLength < 2 || $nameLength > 30 || getUtf8Length($nameLettersOnly) < 2) {
+		return false;
+	}
+
+	return (bool) preg_match("/^\p{L}[\p{L}\s'-]*\p{L}$/u", $name);
+}
+
+function getUtf8Length($value)
+{
+	if (function_exists('mb_strlen')) {
+		return mb_strlen((string) $value, 'UTF-8');
+	}
+
+	return preg_match_all('/./us', (string) $value);
+}
 
 function sendMakeWebhook($webhookUrl, $payload)
 {

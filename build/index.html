@@ -981,7 +981,18 @@
 
 								<div class="contacts-cta__field">
 									<label class="contacts-cta__label" for="contacts-cta-name">Как к&#160;вам обращаться?</label>
-									<input class="contacts-cta__input" id="contacts-cta-name" name="name" type="text" autocomplete="name" placeholder="Ваше имя" required />
+									<input
+										class="contacts-cta__input"
+										id="contacts-cta-name"
+										name="name"
+										type="text"
+										autocomplete="name"
+										placeholder="Ваше имя"
+										minlength="2"
+										maxlength="30"
+										pattern="[A-Za-zА-Яа-яЁё\s'\-]{2,30}"
+										required
+									/>
 								</div>
 
 								<button class="contacts-cta__button" type="submit">
@@ -1010,7 +1021,13 @@
 										<a class="contacts-cta__messengers-link" href="https://wa.me/79052003333" target="_blank" rel="noopener noreferrer">WhatsApp</a>
 									</li>
 									<li class="contacts-cta__messengers-item">
-										<a class="contacts-cta__messengers-link" href="#">Max</a>
+										<a
+											class="contacts-cta__messengers-link"
+											href="https://max.ru/u/f9LHodD0cOJi1QtstovY2951ltuOfI9a8MnhOsFhvl94imb42_xthrqNXY8"
+											target="_blank"
+											rel="noopener noreferrer"
+											>Max</a
+										>
 									</li>
 									<li class="contacts-cta__messengers-item">
 										<a class="contacts-cta__messengers-link" href="https://t.me/+79052003333" target="_blank" rel="noopener noreferrer">Telegram</a>
@@ -1059,7 +1076,13 @@
 								</a>
 							</li>
 							<li class="footer__social">
-								<a class="footer__social-link" href="#" aria-label="Написать в MAX">
+								<a
+									class="footer__social-link"
+									href="https://max.ru/u/f9LHodD0cOJi1QtstovY2951ltuOfI9a8MnhOsFhvl94imb42_xthrqNXY8"
+									target="_blank"
+									rel="noopener noreferrer"
+									aria-label="Написать в MAX"
+								>
 									<img class="footer__social-icon" src="./img/footer/max-icon.svg" width="24" height="24" alt="" aria-hidden="true" />
 								</a>
 							</li>

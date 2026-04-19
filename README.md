@@ -1,26 +1,44 @@
-# Gulp starter
+# Эвакуатор 24 часа
 
-## Commands
+Лендинг службы эвакуации автомобилей в Санкт-Петербурге, Ленинградской области и по межгороду.
 
-- `npm run dev` — development build into `build/`
-- `npm run build` — production/docs build into `docs/`
-- `npm run fonts:dev` — regenerate fonts and `src/scss/base/_fontsAutoGen.scss` for dev
-- `npm run fonts:docs` — regenerate fonts and `src/scss/base/_fontsAutoGen.scss` for docs
+## Команды
 
-## First things to change for every new website
+- `npm install` — установить зависимости проекта.
+- `npm run dev` — запустить разработку с локальным сервером и сборкой в `build/`.
+- `npm run build` — собрать production-версию в `docs/`.
+- `npm run preview` — собрать `docs/` и запустить локальный предпросмотр.
 
-1. `src/html/index.html` — `lang`, `title`, `description`, starter content
-2. `src/scss/base/_vars.scss` — container, breakpoints, fonts, colors
-3. `src/scss/main.scss` — decide whether `@import './base/docs';` is needed
-4. `src/html/blocks/*` — header, footer, mobile nav
-5. `src/js/index.js` — keep only the libraries/modules that the project actually uses
-6. `src/fonts/` — add project fonts, then run one of the font commands
+## Что загружать на хостинг
 
-## Where the main settings live
+Для публикации сайта загружайте содержимое папки `docs/` в корень домена.
 
-- HTML includes: `src/html/blocks/`
-- SCSS base: `src/scss/base/`
-- SCSS blocks: `src/scss/blocks/`
-- JavaScript entry: `src/js/index.js`
-- Mobile nav logic: `src/js/modules/mobile-nav.js`
-- Gulp tasks: `gulp/`
+В корне сайта должны лежать:
+
+- `index.html`
+- `robots.txt`
+- `sitemap.xml`
+- папки `css/`, `js/`, `img/`, `files/`
+
+Файл `files/callback-config.php` содержит реальные доступы к почте и webhook Make. Он не хранится в git и должен передаваться/загружаться отдельно.
+
+## Настройка формы
+
+На хостинге в папке `files/` должен быть файл `callback-config.php`. За основу можно взять `src/files/callback-config.example.php`.
+
+Минимально нужны:
+
+- `email_to` — почта получателя заявки.
+- `from_email` — почтовый ящик домена.
+- `smtp_host`, `smtp_port`, `smtp_encryption`, `smtp_username`, `smtp_password` — SMTP-доступы.
+- `make_webhook_url` — webhook Make для отправки уведомления в Telegram.
+
+Для работы формы нужен PHP 8.1 или новее.
+
+## Перед финальной публикацией
+
+- Проверить, что SSL-сертификат домена выпущен и сайт открывается по HTTPS.
+- Проверить отправку заявки с живого домена.
+- Проверить, что письмо приходит на почту.
+- Проверить, что уведомление приходит в Telegram через Make.
+- Проверить, что ссылка на `files/privacy-policy.pdf` открывается.
